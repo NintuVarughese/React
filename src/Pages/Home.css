@@ -1,0 +1,80 @@
+/* Home.css */
+
+/* Styling for the table */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow for subtle depth */
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  /* Table Header */
+  .styled-table thead {
+    background-color: #6C4F94; /* Dark Lavender header background */
+    color: white;
+    text-align: center;
+  }
+  
+  /* Table Header Cells */
+  .styled-table th,
+  .styled-table td {
+    padding: 12px 15px;
+    text-align: center;
+  }
+  
+  /* Table Body */
+  .styled-table tbody tr {
+    background-color: #F9F7F9; /* Light background for the body */
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover effect for rows */
+  .styled-table tbody tr:hover {
+    background-color: #E1D5E7; /* Slightly darker lavender when hovered */
+  }
+  
+  /* Bold header text */
+  .styled-table th {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  /* Table Data Styling */
+  .styled-table td {
+    font-size: 14px;
+    color: #6C4F94; /* Use dark lavender for the text to match the navbar */
+  }
+  
+  /* Table border */
+  .styled-table th,
+  .styled-table td {
+    border-bottom: 2px solid #D1C6D0; /* Light border for separation */
+  }
+  
+  /* Remove bottom border for last row */
+  .styled-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* Additional spacing for the table container */
+  .table-container {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  .btn-dark-lavender {
+    background-color: #6C4F94; /* Dark lavender color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    padding: 0.375rem 0.75rem; /* Standard button padding */
+    font-size: 1rem; /* Adjust font size */
+    cursor: pointer;
+  }
+  
+  .btn-dark-lavender:hover {
+    background-color: rgba(222, 82, 206, 0.333); /* Slightly darker lavender for hover effect */
+  }
+  
+  

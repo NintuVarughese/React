@@ -1,58 +1,59 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Ensure useNavigate is imported
+import { useNavigate } from 'react-router-dom';
 
 export default function AddProject() {
-  let navigate = useNavigate(); // Initialize navigate
+  let navigate = useNavigate();
 
-  // Initialize state with project details
   const [project, setProject] = useState({
     name: "",
     risk: "",
-    timeline: "",
+    startDate: "",
+    endDate: "",
     milestone: "",
     budget: "",
     dependency: ""
   });
 
-  // Initialize state for error message
   const [error, setError] = useState("");
 
-  // Handle input changes
   const onInputChange = (e) => {
     setProject({ ...project, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => { // Added async to handle async operations
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate if endDate is after startDate
+    if (new Date(project.endDate) <= new Date(project.startDate)) {
+      setError("End Date must be after Start Date.");
+      return;
+    }
 
     // Check if all fields are filled
     if (
       !project.name ||
       !project.risk ||
-      !project.timeline ||
+      !project.startDate ||
+      !project.endDate ||
       !project.milestone ||
       !project.budget ||
       !project.dependency
     ) {
       setError("Please fill out all fields before submitting.");
-      return; // Stop submission if fields are not filled
+      return;
     }
 
     try {
-      // Sending POST request to the API
       await axios.post("http://localhost:8080/project", project);
-      // Redirecting to home page after successful submission
       navigate("/");
     } catch (error) {
       console.error("There was an error submitting the project!", error);
     }
   };
 
-  // Handle cancel action
   const handleCancel = () => {
-    navigate("/"); // Redirect to home page on cancel
+    navigate("/");
   };
 
   return (
@@ -61,7 +62,6 @@ export default function AddProject() {
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
           <h2 className="text-center m-4">Add Project</h2>
 
-          {/* Display error message if validation fails */}
           {error && <div className="alert alert-danger">{error}</div>}
 
           <form onSubmit={handleSubmit}>
@@ -92,15 +92,26 @@ export default function AddProject() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="timeline" className="form-label">
-                Timeline
+              <label htmlFor="startDate" className="form-label">
+                Start Date
               </label>
               <input
-                type="text"
+                type="date"
                 className="form-control"
-                placeholder="Enter Timeline"
-                name="timeline"
-                value={project.timeline}
+                name="startDate"
+                value={project.startDate}
+                onChange={onInputChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="endDate" className="form-label">
+                End Date
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                name="endDate"
+                value={project.endDate}
                 onChange={onInputChange}
               />
             </div>
@@ -143,9 +154,14 @@ export default function AddProject() {
                 onChange={onInputChange}
               />
             </div>
-            <button type="submit" className="btn btn-outline-primary">Submit</button>
-            {/* Cancel button now navigates to the home page */}
-            <button type="button" className="btn btn-outline-danger mx-2" onClick={handleCancel}>
+            <button type="submit" className="btn btn-outline-primary">
+              Submit
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-danger mx-2"
+              onClick={handleCancel}
+            >
               Cancel
             </button>
           </form>

@@ -4,7 +4,8 @@ import Navbar from './Layout/Navbar';
 import Home from './Pages/Home';
 import Addproject from "./Users/Addproject";
 import EditProject from './Users/Editproject';
-import ViewUser from './Users/Viewproject';  // Import the ViewUser component
+import ViewUser from './Users/Viewproject';
+import SortedProjects from './Pages/SortedProjects'; // Import the new component
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/Addproject" element={<Addproject />} />
           <Route exact path="/editproject/:id" element={<EditProject />} />
-          <Route exact path="/viewUser/:id" element={<ViewUser />} />  {/* Add this route */}
+          <Route exact path="/viewUser/:id" element={<ViewUser />} />
+          <Route exact path="/sorted-projects/:sortBy" element={<SortedProjects />} /> {/* Add this route */}
         </Routes>
       </Router>
     </div>

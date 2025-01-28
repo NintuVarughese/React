@@ -1,15 +1,16 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'; // Import useParams for getting the ID
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function EditProject() {
   let navigate = useNavigate();
-  const { id } = useParams(); // To get the project id from the URL
+  const { id } = useParams();
 
   const [project, setProject] = useState({
     name: "",
     risk: "",
-    timeline: "",
+    startDate: "",
+    endDate: "",
     milestone: "",
     budget: "",
     dependency: ""
@@ -17,17 +18,16 @@ export default function EditProject() {
 
   const [error, setError] = useState("");
 
-  // Fetch project details when component mounts
   useEffect(() => {
     const fetchProject = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/project/${id}`);
-        setProject(response.data); // Set project details for editing
+        setProject(response.data);
       } catch (error) {
         console.error("There was an error fetching the project!", error);
       }
     };
-    
+
     if (id) {
       fetchProject();
     }
@@ -40,21 +40,36 @@ export default function EditProject() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!project.name || !project.risk || !project.timeline || !project.milestone || !project.budget || !project.dependency) {
+    // Validate if endDate is after startDate
+    if (new Date(project.endDate) <= new Date(project.startDate)) {
+      setError("End Date must be after Start Date.");
+      return;
+    }
+
+    // Check if all fields are filled
+    if (
+      !project.name ||
+      !project.risk ||
+      !project.startDate ||
+      !project.endDate ||
+      !project.milestone ||
+      !project.budget ||
+      !project.dependency
+    ) {
       setError("Please fill out all fields before submitting.");
       return;
     }
 
     try {
-      await axios.put(`http://localhost:8080/project/${id}`, project); // Updated method for PUT request to update project
-      navigate("/"); // Redirect to home after success
+      await axios.put(`http://localhost:8080/project/${id}`, project);
+      navigate("/");
     } catch (error) {
       console.error("There was an error submitting the project!", error);
     }
   };
 
   const handleCancel = () => {
-    navigate("/"); // Cancel button will redirect to home
+    navigate("/");
   };
 
   return (
@@ -66,9 +81,10 @@ export default function EditProject() {
           {error && <div className="alert alert-danger">{error}</div>}
 
           <form onSubmit={handleSubmit}>
-            {/* Form fields with value populated from state */}
             <div className="mb-3">
-              <label htmlFor="name" className="form-label">Project Name</label>
+              <label htmlFor="name" className="form-label">
+                Project Name
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -79,7 +95,9 @@ export default function EditProject() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="risk" className="form-label">Risk</label>
+              <label htmlFor="risk" className="form-label">
+                Risk
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -90,18 +108,33 @@ export default function EditProject() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="timeline" className="form-label">Timeline</label>
+              <label htmlFor="startDate" className="form-label">
+                Start Date
+              </label>
               <input
-                type="text"
+                type="date"
                 className="form-control"
-                placeholder="Enter Timeline"
-                name="timeline"
-                value={project.timeline}
+                name="startDate"
+                value={project.startDate}
                 onChange={onInputChange}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="milestone" className="form-label">Milestone</label>
+              <label htmlFor="endDate" className="form-label">
+                End Date
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                name="endDate"
+                value={project.endDate}
+                onChange={onInputChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="milestone" className="form-label">
+                Milestone
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -112,7 +145,9 @@ export default function EditProject() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="budget" className="form-label">Budget</label>
+              <label htmlFor="budget" className="form-label">
+                Budget
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -123,7 +158,9 @@ export default function EditProject() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="dependency" className="form-label">Dependency</label>
+              <label htmlFor="dependency" className="form-label">
+                Dependency
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -133,8 +170,16 @@ export default function EditProject() {
                 onChange={onInputChange}
               />
             </div>
-            <button type="submit" className="btn btn-outline-primary">Submit</button>
-            <button type="button" className="btn btn-outline-danger mx-2" onClick={handleCancel}>Cancel</button>
+            <button type="submit" className="btn btn-outline-primary">
+              Submit
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-danger mx-2"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
           </form>
         </div>
       </div>

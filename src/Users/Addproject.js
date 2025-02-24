@@ -6,13 +6,16 @@ export default function AddProject() {
   let navigate = useNavigate();
 
   const [project, setProject] = useState({
-    name: "",
-    risk: "",
+    clientName: "",
+    programName: "",
+    description: "",
+    engineeringManager: "",
     startDate: "",
     endDate: "",
-    milestone: "",
     budget: "",
-    dependency: ""
+    scope: "",
+    contractTypeName: "",
+    phaseName: ""
   });
 
   const [error, setError] = useState("");
@@ -32,13 +35,16 @@ export default function AddProject() {
 
     // Check if all fields are filled
     if (
-      !project.name ||
-      !project.risk ||
+      !project.clientName ||
+      !project.programName ||
+      !project.description ||
+      !project.engineeringManager ||
       !project.startDate ||
       !project.endDate ||
-      !project.milestone ||
       !project.budget ||
-      !project.dependency
+      !project.scope ||
+      !project.contractTypeName ||
+      !project.phaseName
     ) {
       setError("Please fill out all fields before submitting.");
       return;
@@ -66,28 +72,53 @@ export default function AddProject() {
 
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="name" className="form-label">
-                Project Name
+              <label htmlFor="clientName" className="form-label">
+                Client Name
               </label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter project name"
-                name="name"
-                value={project.name}
+                placeholder="Enter client name"
+                name="clientName"
+                value={project.clientName}
                 onChange={onInputChange}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="risk" className="form-label">
-                Risk
+              <label htmlFor="programName" className="form-label">
+                Program Name
               </label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter Risk"
-                name="risk"
-                value={project.risk}
+                placeholder="Enter program name"
+                name="programName"
+                value={project.programName}
+                onChange={onInputChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Description
+              </label>
+              <textarea
+                className="form-control"
+                placeholder="Enter description"
+                name="description"
+                value={project.description}
+                onChange={onInputChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="engineeringManager" className="form-label">
+                Engineering Manager
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter engineering manager"
+                name="engineeringManager"
+                value={project.engineeringManager}
                 onChange={onInputChange}
               />
             </div>
@@ -116,43 +147,59 @@ export default function AddProject() {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="milestone" className="form-label">
-                Milestone
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter Milestone"
-                name="milestone"
-                value={project.milestone}
-                onChange={onInputChange}
-              />
-            </div>
-            <div className="mb-3">
               <label htmlFor="budget" className="form-label">
                 Budget
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
-                placeholder="Enter Budget"
+                placeholder="Enter budget"
                 name="budget"
                 value={project.budget}
                 onChange={onInputChange}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="dependency" className="form-label">
-                Dependency
+              <label htmlFor="scope" className="form-label">
+                Scope
+              </label>
+              <textarea
+                className="form-control"
+                placeholder="Enter scope"
+                name="scope"
+                value={project.scope}
+                onChange={onInputChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="contractTypeName" className="form-label">
+                Contract Type
               </label>
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter Dependency"
-                name="dependency"
-                value={project.dependency}
+                placeholder="Enter contract type"
+                name="contractTypeName"
+                value={project.contractTypeName}
                 onChange={onInputChange}
               />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="phaseName" className="form-label">
+                Phase
+              </label>
+              <select
+                className="form-control"
+                name="phaseName"
+                value={project.phaseName}
+                onChange={onInputChange}
+              >
+                <option value="">Select Phase</option>
+                <option value="INITIAL_PHASE">Initial Phase</option>
+                <option value="DEVELOPING">Developing</option>
+                <option value="TESTING">Testing</option>
+                <option value="DEPLOYING">Deploying</option>
+              </select>
             </div>
             <button type="submit" className="btn btn-outline-primary">
               Submit

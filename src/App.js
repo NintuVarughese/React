@@ -5,7 +5,8 @@ import Home from './Pages/Home';
 import Addproject from "./Users/Addproject";
 import EditProject from './Users/Editproject';
 import ViewUser from './Users/Viewproject';
-import SortedProjects from './Pages/SortedProjects'; // Import the new component
+
+import ViewProjects from './Pages/ViewProjects'; // Import the new component
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -18,11 +19,12 @@ function App() {
           <Route exact path="/Addproject" element={<Addproject />} />
           <Route exact path="/editproject/:id" element={<EditProject />} />
           <Route exact path="/viewUser/:id" element={<ViewUser />} />
-          <Route exact path="/sorted-projects/:sortBy" element={<SortedProjects />} /> {/* Add this route */}
+          
+          <Route exact path="/view-projects" element={<ViewProjects />} /> {/* New Route */}
         </Routes>
       </Router>
     </div>
   );
 }
 
-export default App;
+export default App; 

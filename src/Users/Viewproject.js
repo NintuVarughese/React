@@ -10,6 +10,7 @@ export default function ViewUser() {
     const fetchProjectDetails = async () => {
       try {
         const result = await axios.get(`http://localhost:8080/project/${id}`);
+        console.log("Fetched project data:", result.data); // Debugging step
         setProject(result.data);
       } catch (error) {
         console.error("Error fetching project details:", error);
@@ -27,20 +28,21 @@ export default function ViewUser() {
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4">Project details</h2>
+          <h2 className="text-center m-4">Project Details</h2>
           <div className="card">
             <div className="card-header">
-              <h5>Details of Project id: {project.id}</h5>
+              <h5>Details of Project ID: {project.id}</h5>
             </div>
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item"><b>Name:</b> {project.name}</li>
-              <li className="list-group-item"><b>Risk:</b> {project.risk}</li>
-              <li className="list-group-item"><b>Start Date:</b> {project.startDate}</li>
-              <li className="list-group-item"><b>End Date:</b> {project.endDate}</li>
-              <li className="list-group-item"><b>Milestone:</b> {project.milestone}</li>
-              <li className="list-group-item"><b>Budget:</b> {project.budget}</li>
-              <li className="list-group-item"><b>Dependency:</b> {project.dependency}</li>
-            </ul>
+            <div className="card-body">
+              <p className="card-text"><strong>Client Name:</strong> {project.clientName}</p>
+              <p className="card-text"><strong>Program Name:</strong> {project.programName}</p>
+              <p className="card-text"><strong>Start Date:</strong> {project.startDate}</p>
+              <p className="card-text"><strong>End Date:</strong> {project.endDate}</p>
+              <p className="card-text"><strong>Budget:</strong> {project.budget}</p>
+              <p className="card-text"><strong>Phase:</strong> {project.phaseName}</p>
+              <p className="card-text"><strong>Engineering Manager:</strong> {project.engineeringManager || "Not Available"}</p>
+              <p className="card-text"><strong>Scope:</strong> {project.scope || "Not Available"}</p>
+            </div>
           </div>
           <Link className="btn btn-primary my-2" to="/">
             Back to Home
